@@ -510,6 +510,29 @@
                  "width":262.12515704388,
                  "x":336.604857967667,
                  "y":429.56142147806
+                }, 
+                {
+                 "height":0,
+                 "id":51,
+                 "name":"video",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"default",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"persist",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"variable",
+                 "visible":true,
+                 "width":0,
+                 "x":435.334872979215,
+                 "y":538.10623556582
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -592,7 +615,7 @@
          "y":0
         }],
  "nextlayerid":67,
- "nextobjectid":51,
+ "nextobjectid":53,
  "orientation":"orthogonal",
  "properties":[
         {

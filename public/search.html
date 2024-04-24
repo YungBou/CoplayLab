@@ -10,66 +10,96 @@
 <body style="background-color: white;">
 
     <input type="text" id="searchBar" />
-    <button onclick="execute()">Search</button>
+    <button onclick="checkSharedState()">Search</button>
     <div id="results-container"></div>
     <button onclick="loadMore()">Load More</button>
 
 
     <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://play.workadventu.re/iframe_api.js"></script>
+
     <script>
+        /// <reference types="@workadventure/iframe-api-typings" />
+
         var nextPageToken = '';
+        var lastVideoState = '';
+        var currentVideoState = '';
+
+        WA.state.onVariableChange('video').subscribe((value) => {
+            displayResults(value);
+        })
+
+        function checkSharedState() {
+            const searchBar = document.getElementById('searchBar');
+            var q = searchBar.value;
+
+            currentVideoState = q;
+
+            if (currentVideoState !== lastVideoState) {
+                console.log("States different");
+
+                lastVideoState = currentVideoState;
+                searchYouTube(currentVideoState);
+
+            } else {
+                console.log("states same");
+            }
+        }
 
         function initClient() {
             return gapi.client.init({
-                apiKey: 'CLE_API',
+                apiKey: 'AIzaSyB5wz7xImP4X5gH6e3PcNdxqq2gnkBmDP8',
                 discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
             });
         }
 
-        function execute() {
-            const searchBar = document.getElementById('searchBar');
-            var q = searchBar.value;
-            return gapi.client.youtube.search.list({
+        function searchYouTube(currentVideoState) {
+            gapi.client.youtube.search.list({
                 "part": [
                     "snippet"
                 ],
-                "maxResults": 10,
-                "q": q,
+                "maxResults": 1,
+                "q": currentVideoState,
                 "pageToken": nextPageToken
             })
                 .then(function (response) {
+                    WA.state.video = response.result.items;
                     displayResults(response.result.items);
                     nextPageToken = response.result.nextPageToken;
-
 
                 },
                     function (err) { console.error("Execute error", err); });
         }
-
         function displayResults(items) {
             var resultsContainer = document.getElementById('results-container');
             resultsContainer.innerHTML = '';
 
-            items.forEach(function (item) {
-                var videoTitle = item.snippet.title;
-                var videoId = item.id.videoId;
-                var videoThumbnail = item.snippet.thumbnails.default.url;
-                var videoElement = document.createElement('div');
+            if (typeof items == 'object') {
+                items.forEach(function (item) {
+                    var videoTitle = item.snippet.title;
+                    var videoId = item.id.videoId;
+                    var videoThumbnail = item.snippet.thumbnails.default.url;
+                    var videoElement = document.createElement('div');
 
-                // Call getEmbedUrl function to get the embed URL
-                var embedUrl = getEmbedUrl(item);
+                    var embedUrl = getEmbedUrl(item);
 
-                videoElement.innerHTML = `
+                    videoElement.innerHTML = `
                 <a href="player.html?embedUrl=${embedUrl}">
                     <img src="${videoThumbnail}" alt="${videoTitle}">
                     <p>${videoTitle}</p>
                 </a>
             `;
+                    videoElement.addEventListener('click', function () {
+                        WA.state.video = `player.html?embedUrl=${embedUrl}`
 
-                resultsContainer.appendChild(videoElement);
-            });
+                    })
 
-            // Define getEmbedUrl function outside displayResults function
+                    resultsContainer.appendChild(videoElement);
+                });
+            } else if (typeof items == 'string') {
+                document.location.href = items;
+            }
+
             function getEmbedUrl(data) {
                 const videoId = data.id.videoId;
                 const embedUrl = `https://www.youtube.com/embed/${videoId}`;
@@ -83,7 +113,7 @@
 
         gapi.load('client', function () {
             gapi.client.init({
-                apiKey: 'CLE_API',
+                apiKey: 'AIzaSyB5wz7xImP4X5gH6e3PcNdxqq2gnkBmDP8',
                 discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
             }).then(function () {
                 console.log("GAPI client loaded for API");
