@@ -25,20 +25,18 @@ WA.onInit().then(() => {
 
   WA.room.area.onLeave("clock").subscribe(closePopup);
 
-  let noteWebsite: any;
+  let searchWebsite: any;
 
   WA.room.area.onEnter("cinema").subscribe(async () => {
-    console.log("Entering visibleNote layer");
-
-    noteWebsite = await WA.ui.website.open({
+    searchWebsite = await WA.ui.website.open({
       url: "./search.html",
       position: {
         vertical: "top",
         horizontal: "middle",
       },
       size: {
-        height: "30vh",
-        width: "50vw",
+        height: "50vh",
+        width: "60vw",
       },
       margin: {
         top: "10vh",
@@ -48,7 +46,7 @@ WA.onInit().then(() => {
   });
 
   WA.room.area.onLeave("cinema").subscribe(() => {
-    noteWebsite.close();
+    searchWebsite.close();
   });
 
   // The line below bootstraps the Scripting API Extra library that adds a number of advanced properties/features to WorkAdventure

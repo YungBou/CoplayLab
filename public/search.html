@@ -1,86 +1,97 @@
-<script src="https://apis.google.com/js/api.js"></script>
-<script>
-    var nextPageToken = '';
+<!DOCTYPE html>
+<html lang="en">
 
-    function initClient() {
-        return gapi.client.init({
-            apiKey: process.env.API_KEY,
-            discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
-            scope: 'https://www.googleapis.com/auth/youtube.force-ssl'
-        });
-    }
-
-    function execute() {
-        const searchBar = document.getElementById('searchBar');
-        var q = searchBar.value;
-        console.log(q)
-        return gapi.client.youtube.search.list({
-            "part": [
-                "snippet"
-            ],
-            "maxResults": 10,
-            "q": q,
-            "pageToken": nextPageToken
-        })
-            .then(function (response) {
-                displayResults(response.result.items);
-                nextPageToken = response.result.nextPageToken;
-
-
-            },
-                function (err) { console.error("Execute error", err); });
-    }
-    function displayResults(items) {
-        var resultsContainer = document.getElementById('results-container');
-        resultsContainer.innerHTML = '';
-
-        items.forEach(function (item) {
-            var videoTitle = item.snippet.title;
-            var videoId = item.id.videoId;
-            var videoThumbnail = item.snippet.thumbnails.default.url;
-            var videoElement = document.createElement('div');
-
-            // Call getEmbedUrl function to get the embed URL
-            var embedUrl = getEmbedUrl(item);
-
-            videoElement.innerHTML = `
-            <a href="${embedUrl}">
-                <img src="${videoThumbnail}" alt="${videoTitle}">
-                <p>${videoTitle}</p>
-            </a>
-        `;
-
-            resultsContainer.appendChild(videoElement);
-        });
-
-        // Define getEmbedUrl function outside displayResults function
-        function getEmbedUrl(data) {
-            const videoId = data.id.videoId;
-            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            return embedUrl;
-        }
-    }
-
-    function loadMore() {
-        execute();
-    }
-
-    gapi.load('client', function () {
-        gapi.client.init({
-            apiKey: 'AIzaSyAZthlK2sWPQEM5oWNUw4U0nsFaqj6r_pM',
-            discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
-            scope: 'https://www.googleapis.com/auth/youtube.force-ssl'
-        }).then(function () {
-            console.log("GAPI client loaded for API");
-        }, function (err) {
-            console.error("Error loading GAPI client for API", err);
-        });
-    });
-</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Search</title>
+</head>
 
 <body style="background-color: white;">
+
     <input type="text" id="searchBar" />
     <button onclick="execute()">Search</button>
     <div id="results-container"></div>
     <button onclick="loadMore()">Load More</button>
+
+
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        var nextPageToken = '';
+
+        function initClient() {
+            return gapi.client.init({
+                apiKey: 'CLE_API',
+                discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
+            });
+        }
+
+        function execute() {
+            const searchBar = document.getElementById('searchBar');
+            var q = searchBar.value;
+            return gapi.client.youtube.search.list({
+                "part": [
+                    "snippet"
+                ],
+                "maxResults": 10,
+                "q": q,
+                "pageToken": nextPageToken
+            })
+                .then(function (response) {
+                    displayResults(response.result.items);
+                    nextPageToken = response.result.nextPageToken;
+
+
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+
+        function displayResults(items) {
+            var resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = '';
+
+            items.forEach(function (item) {
+                var videoTitle = item.snippet.title;
+                var videoId = item.id.videoId;
+                var videoThumbnail = item.snippet.thumbnails.default.url;
+                var videoElement = document.createElement('div');
+
+                // Call getEmbedUrl function to get the embed URL
+                var embedUrl = getEmbedUrl(item);
+
+                videoElement.innerHTML = `
+                <a href="player.html?embedUrl=${embedUrl}">
+                    <img src="${videoThumbnail}" alt="${videoTitle}">
+                    <p>${videoTitle}</p>
+                </a>
+            `;
+
+                resultsContainer.appendChild(videoElement);
+            });
+
+            // Define getEmbedUrl function outside displayResults function
+            function getEmbedUrl(data) {
+                const videoId = data.id.videoId;
+                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                return embedUrl;
+            }
+        }
+
+        function loadMore() {
+            execute();
+        }
+
+        gapi.load('client', function () {
+            gapi.client.init({
+                apiKey: 'CLE_API',
+                discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
+            }).then(function () {
+                console.log("GAPI client loaded for API");
+            }, function (err) {
+                console.error("Error loading GAPI client for API", err);
+            });
+        });
+    </script>
 </body>
+
+</html>

@@ -1,0 +1,28 @@
+<!-- player.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+</head>
+
+<body>
+    <div style="background-color: white;">
+        <button onclick="history.back()">Back to results</button>
+        <iframe id="videoFrame" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <script>
+        // Retrieve the embedUrl query parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const embedUrl = urlParams.get('embedUrl');
+
+        // Set the src attribute of the iframe to the embedUrl
+        if (embedUrl) {
+            document.getElementById('videoFrame').src = decodeURIComponent(embedUrl);
+        }
+    </script>
+</body>
+
+</html>
