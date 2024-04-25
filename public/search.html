@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youtube Search</title>
     <link rel="stylesheet" href="main.css">
+
+    <style>
+    .hidden {
+        display: none;
+    }
+    </style>
+
 </head>
 
 <body>
@@ -14,8 +21,18 @@
         <h1>Search on Youtube</h1>
         <input type="text" id="searchBar" placeholder="Search Youtube" />
         <button class="btn" onclick="checkSharedState()">Search</button>
+        <button class="btn" id="adminPollButton" onclick="openPollForm()">Start Poll</button>
         <div id="results-container"></div>
         <button class="hidden btn-outline" onclick="loadMore()" id="loadButton">Load More</button>
+    </div>
+
+    <div id="pollForm" class="hidden">
+        <h2>Quelle vidéo allons-nous regarder?</h2>
+        <input type="text" id="option1" placeholder="Option 1" />
+        <input type="text" id="option2" placeholder="Option 2" />
+        <input type="text" id="option3" placeholder="Option 3" />
+        <input type="text" id="option4" placeholder="Option 4" />
+        <button onclick="submitPoll()">Submit Poll</button>
     </div>
 
 
@@ -137,6 +154,68 @@
                 console.error("Error loading GAPI client for API", err);
             });
         });
+
+        function openPollForm() {
+            document.getElementById('pollForm').classList.remove('hidden');
+        }
+
+        function submitPoll() {
+            const options = {
+                option1: document.getElementById('option1').value,
+                option2: document.getElementById('option2').value,
+                option3: document.getElementById('option3').value,
+                option4: document.getElementById('option4').value,
+            };
+            // Sauvegarder les options dans l'état partagé et diffuser l'événement
+            WA.state.saveVariable('pollOptions', JSON.stringify(options)).catch(e => console.error('Something went wrong while saving variable', e));
+            document.getElementById('pollForm').classList.add('hidden');
+
+            // Diffuser l'événement à tous les joueurs
+            WA.event.broadcast('poll-event', JSON.stringify(options));
+        }
+
+
+        WA.onInit().then(() => {
+            WA.event.on('poll-event').subscribe((event) => {
+                const options = JSON.parse(event.data);
+                openPollForAll(options);
+            });
+        });
+
+        function openPollForAll(pollOptions) {
+            let buttons = Object.keys(pollOptions).map(key => ({
+                label: pollOptions[key],
+                className: 'primary',
+                callback: (popup) => {
+                    vote(key);
+                    popup.close();
+                }
+            }));
+
+            WA.ui.openPopup("pollPopup", "Quelle vidéo allons-nous regarder?", buttons);
+        }
+
+        function vote(option) {
+            let votes = JSON.parse(WA.state.loadVariable('votes') || '{}');
+            votes[option] = (votes[option] || 0) + 1;
+            WA.state.saveVariable('votes', JSON.stringify(votes)).catch(e => console.error('Error saving votes', e));
+        }
+
+
+        function displayResults() {
+            const votes = JSON.parse(WA.state.loadVariable('votes'));
+            let resultsHtml = "Résultats du vote:<br>";
+            Object.keys(votes).forEach(option => {
+                resultsHtml += `${option}: ${votes[option]} votes<br>`;
+            });
+            WA.ui.openPopup("resultsPopup", resultsHtml, [{
+                label: "Fermer",
+                className: "primary",
+                callback: (popup) => {
+                    popup.close();
+                }
+            }]);
+        }
 
     </script>
 </body>
