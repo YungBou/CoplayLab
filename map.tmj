@@ -533,6 +533,64 @@
                  "width":0,
                  "x":435.334872979215,
                  "y":538.10623556582
+                }, 
+                {
+                 "height":0,
+                 "id":53,
+                 "name":"videoState",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"default",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"persist",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"variable",
+                 "visible":true,
+                 "width":0,
+                 "x":465.357967667436,
+                 "y":526.558891454965
+                }, 
+                {
+                 "height":0,
+                 "id":54,
+                 "name":"query",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"default",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"persist",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"variable",
+                 "visible":true,
+                 "width":0,
+                 "x":541.570438799076,
+                 "y":526.558891454965
+                }, 
+                {
+                 "height":0,
+                 "id":55,
+                 "name":"videoTime",
+                 "point":true,
+                 "rotation":0,
+                 "type":"variable",
+                 "visible":true,
+                 "width":0,
+                 "x":411.08545034642,
+                 "y":520.785219399538
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -615,7 +673,7 @@
          "y":0
         }],
  "nextlayerid":67,
- "nextobjectid":53,
+ "nextobjectid":56,
  "orientation":"orthogonal",
  "properties":[
         {
