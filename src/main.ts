@@ -16,24 +16,27 @@ WA.onInit().then(() => {
   let searchWebsite: any;
 
   WA.room.area.onEnter("cinema").subscribe(async () => {
-    searchWebsite = await WA.ui.website.open({
-      url: "./search.html",
-      position: {
-        vertical: "top",
-        horizontal: "middle",
-      },
-      size: {
-        height: "50vh",
-        width: "60vw",
-      },
-      margin: {
-        top: "10vh",
-      },
-      allowApi: true,
-    });
+    setTimeout(async () => {
+      searchWebsite = await WA.ui.website.open({
+        url: "./search.html",
+        position: {
+          vertical: "top",
+          horizontal: "middle",
+        },
+        size: {
+          height: "54vh",
+          width: "63vw",
+        },
+        margin: {
+          top: "1.5vh",
+          right: ".5vh",
+        },
+        allowApi: true,
+      });
+    }, 250);
   });
 
-  WA.room.area.onLeave("cinema").subscribe(() => {
+  WA.room.area.onLeave("cinema").subscribe(async () => {
     searchWebsite.close();
   });
 

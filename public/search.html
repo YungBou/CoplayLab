@@ -123,6 +123,8 @@
 
         function loadMore() {
             searchYouTube(currentVideoState);
+            var resultsContainer = document.getElementById('results-container');
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         gapi.load('client', function () {
