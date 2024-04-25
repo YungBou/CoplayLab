@@ -40,6 +40,19 @@ WA.onInit().then(() => {
     searchWebsite.close();
   });
 
+  WA.event.on("teleport-event").subscribe((event) => {
+    console.log("Event received", event.data);
+    WA.nav.goToRoom("map.tmj");
+  });
+  
+    WA.ui.onRemotePlayerClicked.subscribe((remotePlayer) => {
+      console.log("Le joueur distant a été cliqué:", remotePlayer)
+  
+      remotePlayer.addAction('Téléportation', () => {
+        remotePlayer.sendEvent("teleport-event", "my payload");
+    }); 
+  });
+
   function closePopup() {
     if (currentPopup !== undefined) {
       currentPopup.close();
