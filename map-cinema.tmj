@@ -292,7 +292,46 @@
          "draworder":"topdown",
          "id":75,
          "name":"floorLayer",
-         "objects":[],
+         "objects":[
+                {
+                 "height":83.6272587912853,
+                 "id":24,
+                 "name":"homeScreen",
+                 "properties":[
+                        {
+                         "name":"url",
+                         "type":"string",
+                         "value":"live.html"
+                        }],
+                 "rotation":0,
+                 "type":"website",
+                 "visible":true,
+                 "width":155.60681934315,
+                 "x":594.371347609978,
+                 "y":90.2278998467041
+                }, 
+                {
+                 "height":118.568181818182,
+                 "id":26,
+                 "name":"chillArea",
+                 "properties":[
+                        {
+                         "name":"focusable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"zoom-margin",
+                         "type":"float",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"area",
+                 "visible":true,
+                 "width":140.409090909091,
+                 "x":32,
+                 "y":128.25
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -438,7 +477,7 @@
          "y":0
         }],
  "nextlayerid":78,
- "nextobjectid":23,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "properties":[
         {
