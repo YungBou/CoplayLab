@@ -23,7 +23,7 @@ Moussa Seydou TRAORE
 GitHub : MoussaST - https://github.com/MoussaST
 Fonctionnalitées développées :
 - Animation de l'écran d'accueil 
-- Barre de réaction dynamique 
+- Barre de réaction dynamique avec effet sonore
 
 ### Procédure d’installation et de lancement du projet
 

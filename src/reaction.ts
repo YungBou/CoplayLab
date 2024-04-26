@@ -13,6 +13,17 @@ function updateCounterAndSaveReaction(reactionKey: string) {
         for (const [key, reaction] of Object.entries(newReactions)) {
             if (key === reactionKey) {
                 reaction.counter++;
+                var sound = WA.sound.loadSound(`../public/audios/${reactionKey}.mp3`);
+                var config = {
+                    volume : 0.5,
+                    loop : false,
+                    rate : 1,
+                    detune : 1,
+                    delay : 0,
+                    seek : 0,
+                    mute : false
+                }
+                sound.play(config);
             }
         }
         newReactions["playerId"][WA.player.id] = reactionKey;
