@@ -166,11 +166,9 @@
                 option3: document.getElementById('option3').value,
                 option4: document.getElementById('option4').value,
             };
-            // Sauvegarder les options dans l'état partagé et diffuser l'événement
             WA.state.saveVariable('pollOptions', JSON.stringify(options)).catch(e => console.error('Something went wrong while saving variable', e));
             document.getElementById('pollForm').classList.add('hidden');
 
-            // Diffuser l'événement à tous les joueurs
             WA.event.broadcast('poll-event', JSON.stringify(options));
         }
 
@@ -198,15 +196,17 @@
         function vote(option) {
             let votes = JSON.parse(WA.state.loadVariable('votes') || '{}');
             votes[option] = (votes[option] || 0) + 1;
-            WA.state.saveVariable('votes', JSON.stringify(votes)).catch(e => console.error('Error saving votes', e));
+            WA.state.saveVariable('votes', JSON.stringify(votes))
+                .then(() => displayResults())
+                .catch(e => console.error('Error saving votes', e));
         }
 
 
         function displayResults() {
             const votes = JSON.parse(WA.state.loadVariable('votes'));
-            let resultsHtml = "Résultats du vote:<br>";
+            let resultsHtml = "Résultats du vote : ";
             Object.keys(votes).forEach(option => {
-                resultsHtml += `${option}: ${votes[option]} votes<br>`;
+                resultsHtml += `${option}: ${votes[option]} votes `;
             });
             WA.ui.openPopup("resultsPopup", resultsHtml, [{
                 label: "Fermer",
