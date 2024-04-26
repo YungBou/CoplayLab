@@ -101,6 +101,10 @@ h1 {
   color: black;
 }
 
+.channel {
+  text-align: left;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -119,7 +123,6 @@ a {
 #player {
   align-self: center;
 }
-
 
 .hidden {
   display: none;
@@ -153,10 +156,10 @@ a {
   border-radius: 4px;
 }
 
-#pollForm button {
+#pollForm .btn-submit {
   width: 100%;
   padding: 10px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;
@@ -164,11 +167,18 @@ a {
   transition: background-color 0.3s;
 }
 
-#pollForm button:hover {
+#pollForm .btn-submit:hover {
   background-color: #45a049;
 }
 
-.container {
+.close-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.subtitle {
   text-align: center;
-  padding-top: 50px;
+  font-style: italic;
+  font-weight: 400;
 }

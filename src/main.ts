@@ -16,41 +16,35 @@ WA.onInit().then(() => {
   let searchWebsite: any;
 
   WA.room.area.onEnter("cinema").subscribe(async () => {
-    setTimeout(async () => {
-      searchWebsite = await WA.ui.website.open({
-        url: "./search.html",
-        position: {
-          vertical: "top",
-          horizontal: "middle",
-        },
-        size: {
-          height: "54vh",
-          width: "63vw",
-        },
-        margin: {
-          top: "1.5vh",
-          right: ".5vh",
-        },
-        allowApi: true,
-      });
-    }, 250);
+    searchWebsite = await WA.room.website.create({
+      name: "player",
+      url: "./search.html",
+      position: {
+        x: 141.88,
+        y: 88.12,
+        height: 253.79,
+        width: 485.55,
+      },
+      allowApi: true,
+      scale: 0.5,
+    });
   });
 
   WA.room.area.onLeave("cinema").subscribe(async () => {
-    searchWebsite.close();
+    WA.room.website.delete("player");
   });
 
   WA.event.on("teleport-event").subscribe((event) => {
     console.log("Event received", event.data);
     WA.nav.goToRoom("home.tmj");
   });
-  
-    WA.ui.onRemotePlayerClicked.subscribe((remotePlayer) => {
-      console.log("Le joueur distant a été cliqué:", remotePlayer)
-  
-      remotePlayer.addAction('Renvoyer le joueur au spawn', () => {
-        remotePlayer.sendEvent("teleport-event", "my payload");
-    }); 
+
+  WA.ui.onRemotePlayerClicked.subscribe((remotePlayer) => {
+    console.log("Le joueur distant a été cliqué:", remotePlayer);
+
+    remotePlayer.addAction("Renvoyer le joueur au spawn", () => {
+      remotePlayer.sendEvent("teleport-event", "my payload");
+    });
   });
 
   function closePopup() {

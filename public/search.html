@@ -20,12 +20,15 @@
     </div>
 
     <div id="pollForm" class="hidden">
-        <h2>Quelle vidéo allons-nous regarder?</h2>
+        <button class="close-button" onclick="closePoll()">&times;</button>
+
+        <h2>What video should we watch next?</h2>
+        <p class="subtitle"><small>The results will be displayed after 10 seconds.</small></p>
         <input type="text" id="option1" placeholder="Option 1" />
         <input type="text" id="option2" placeholder="Option 2" />
         <input type="text" id="option3" placeholder="Option 3" />
         <input type="text" id="option4" placeholder="Option 4" />
-        <button onclick="submitPoll()">Submit Poll</button>
+        <button class="btn-submit" onclick="submitPoll()">Submit Poll</button>
     </div>
 
 
@@ -75,14 +78,15 @@
                 "part": [
                     "snippet"
                 ],
-                "maxResults": 4,
+                "maxResults": 10,
                 "q": currentVideoState,
-                "pageToken": nextPageToken
+                "pageToken": nextPageToken,
+                'type': 'video',
             })
                 .then(function (response) {
                     WA.state.video = response.result.items;
                     nextPageToken = response.result.nextPageToken;
-
+                    console.log(response);
                     displayResults(response.result.items);
 
                 },
@@ -109,7 +113,7 @@
                 <a href="player.html?videoId=${videoId}&query=${WA.state.query}">
                     <img class="video-thumbnail" src="${videoThumbnail}" alt="${videoTitle}">
                     <p class="video-title">${videoTitle}</p>
-                    <small>${videoChannel}</small>
+                    <small class="channel">${videoChannel}</small>
                 </a>
             `;
                     document.getElementById('loadButton').classList.remove('hidden');
@@ -147,10 +151,15 @@
                 console.error("Error loading GAPI client for API", err);
             });
         });
-
+        const poll = document.getElementById('pollForm');
         function openPollForm() {
-            document.getElementById('pollForm').classList.remove('hidden');
+            poll.classList.remove('hidden');
             resetVotes();
+        }
+
+        function closePoll() {
+            poll.classList.add('hidden');
+
         }
 
         function submitPoll() {
@@ -179,37 +188,52 @@
                 label: pollOptions[key],
                 className: 'primary',
                 callback: (popup) => {
-                    vote(key);
+                    vote(pollOptions[key]);
+                    console.log('close popup');
                     popup.close();
                 }
             }));
-
-            WA.ui.openPopup("pollPopup", "Quelle vidéo allons-nous regarder?", buttons);
+            console.log('open popup');
+            WA.ui.openPopup("pollPopup", "What video should we watch?", buttons);
         }
 
         function vote(option) {
             let votes = JSON.parse(WA.state.loadVariable('votes') || '{}');
             votes[option] = (votes[option] || 0) + 1;
             WA.state.saveVariable('votes', JSON.stringify(votes))
-                .then(() => displayResults())
+                .then(() => displayVotes())
                 .catch(e => console.error('Error saving votes', e));
         }
 
 
-        function displayResults() {
-            const votes = JSON.parse(WA.state.loadVariable('votes'));
-            let resultsHtml = "Résultats du vote : ";
-            Object.keys(votes).forEach(option => {
-                resultsHtml += `${option}: ${votes[option]} votes `;
-            });
-            WA.ui.openPopup("resultsPopup", resultsHtml, [{
-                label: "Fermer",
-                className: "primary",
-                callback: (popup) => {
-                    popup.close();
+        function displayVotes() {
+            let countdown = 10; // Set the countdown timer to 10 seconds
+            const countdownInterval = setInterval(() => {
+                countdown--; // Decrement countdown every second
+                countdownHtml = `Countdown: ${countdown} seconds remaining`;
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval); // Stop the countdown
+                    showResults(); // Call the function to display the results
                 }
-            }]);
+            }, 1000); // Update the countdown every second
+
+            function showResults() {
+                const votes = JSON.parse(WA.state.loadVariable('votes'));
+                let resultsHtml = "Winner\n";
+                Object.keys(votes).forEach(option => {
+                    resultsHtml += `${option}: ${votes[option]} votes `;
+                });
+                console.log('open popup 2');
+                WA.ui.openPopup("resultsPopup", resultsHtml, [{
+                    label: "Close",
+                    className: "primary",
+                    callback: (popup) => {
+                        popup.close();
+                    }
+                }]);
+            }
         }
+
 
         function resetVotes() {
             let votes = {};
