@@ -154,8 +154,7 @@
         const poll = document.getElementById('pollForm');
         function openPollForm() {
             poll.classList.remove('hidden');
-            resetForm();
-            resetVotes(); 
+            resetVotes();
         }
 
         function closePoll() {
@@ -189,11 +188,9 @@
                 className: 'primary',
                 callback: (popup) => {
                     vote(pollOptions[key]);
-                    console.log('close popup');
                     popup.close();
                 }
             }));
-            console.log('open popup');
             WA.ui.openPopup("pollPopup", "What video should we watch?", buttons);
         }
 
@@ -241,14 +238,12 @@
             WA.state.saveVariable('votes', JSON.stringify(votes))
                 .then(() => console.log('Votes reset successfully'))
                 .catch(e => console.error('Error resetting votes', e));
-        }
-
-        function resetForm() {
             document.getElementById('option1').value = '';
             document.getElementById('option2').value = '';
             document.getElementById('option3').value = '';
             document.getElementById('option4').value = '';
         }
+
 
     </script>
 </body>
