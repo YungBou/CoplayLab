@@ -8,6 +8,7 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
+
 .hidden {
   display: none;
 }
@@ -70,26 +71,30 @@ h1 {
 .grid-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 15px; /* Adjust the gap between items */
+  grid-gap: 15px;
+  /* Adjust the gap between items */
   margin: 5px auto;
 }
 
 /* Adjust the width of each video container */
 .video-container {
-  width: 100%; /* Each container takes up the full width of its column */
+  width: 100%;
+  /* Each container takes up the full width of its column */
   padding: 3px;
 }
 
 /* Thumbnail styles */
 .video-thumbnail {
-  width: 100%; /* Make thumbnails fill the width of their container */
+  width: 100%;
+  /* Make thumbnails fill the width of their container */
   height: auto;
   border-radius: 8px;
 }
 
 /* Title styles */
 .video-title {
-  margin-top: 10px; /* Space between thumbnail and title */
+  margin-top: 10px;
+  /* Space between thumbnail and title */
   font-size: 16px;
   font-weight: bold;
   text-align: left;
@@ -113,4 +118,57 @@ a {
 
 #player {
   align-self: center;
+}
+
+
+.hidden {
+  display: none;
+}
+
+#pollForm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 300px;
+}
+
+#pollForm h2 {
+  color: #333;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#pollForm input[type="text"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#pollForm button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#pollForm button:hover {
+  background-color: #45a049;
+}
+
+.container {
+  text-align: center;
+  padding-top: 50px;
 }
