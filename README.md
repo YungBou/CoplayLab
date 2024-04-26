@@ -22,8 +22,8 @@ Fonctionnalitées développées :
 Moussa Seydou TRAORE
 GitHub : MoussaST - https://github.com/MoussaST
 Fonctionnalitées développées :
--
-
+- Animation de l'écran d'accueil 
+- Barre de réaction dynamique 
 
 ### Procédure d’installation et de lancement du projet
 

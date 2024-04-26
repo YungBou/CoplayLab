@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Player</title>
     <link rel="stylesheet" href="main.css">
-
 </head>
 
 <body>
@@ -16,12 +15,9 @@
         <div id="player"></div>
     </div>
 
-
-
     <script src="https://play.workadventu.re/iframe_api.js"></script>
 
     <script>
-
         const urlParams = new URLSearchParams(window.location.search);
         const query = urlParams.get('query');
 
@@ -33,6 +29,7 @@
 
         function backToResults() {
             WA.state.video = searchPageUrl;
+            WA.room.website.delete("reaction");
             document.location.href = searchPageUrl;
         }
 
@@ -64,9 +61,21 @@
                 }
             });
         }
-
+        
         function onPlayerReady(event) {
             event.target.playVideo();
+            drawbar = WA.room.website.create({
+                name: "reaction",
+                url: "./reaction.html",
+                position: {
+                    x: 189.64,
+                    y: 350.45,
+                    height: 38.82,
+                    width: 403.18,
+                },
+                allowApi: true,
+                scale: 0.5,
+                });
         }
 
         var done = false;
@@ -107,7 +116,7 @@
                 onPlayerReady;
             }
         })
-
+            
     </script>
 </body>
 
