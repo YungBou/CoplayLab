@@ -506,6 +506,74 @@
                  "width":0,
                  "x":459.481083552406,
                  "y":129.157618013487
+                }, 
+                {
+                 "height":149.840528068228,
+                 "id":30,
+                 "name":"pollPopup",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":661.272270576552,
+                 "x":68.1908990011099,
+                 "y":390.303171914247
+                }, 
+                {
+                 "height":721.387931538057,
+                 "id":31,
+                 "name":"resultsPopup",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":753.688883696477,
+                 "x":2.69174601320171,
+                 "y":13.4587300660079
+                }, 
+                {
+                 "height":0,
+                 "id":32,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":727.668672235528,
+                 "y":105.875343185934
+                }, 
+                {
+                 "height":0,
+                 "id":33,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":496.178515100181,
+                 "y":243.154389859221
+                }, 
+                {
+                 "height":0,
+                 "id":34,
+                 "name":"votes",
+                 "point":true,
+                 "rotation":0,
+                 "type":"variable",
+                 "visible":true,
+                 "width":0,
+                 "x":681.011741340032,
+                 "y":246.74338454349
+                }, 
+                {
+                 "height":0,
+                 "id":35,
+                 "name":"pollOptions",
+                 "point":true,
+                 "rotation":0,
+                 "type":"variable",
+                 "visible":true,
+                 "width":0,
+                 "x":668.45025994509,
+                 "y":165.991004147439
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -611,7 +679,7 @@
          "y":0
         }],
  "nextlayerid":63,
- "nextobjectid":30,
+ "nextobjectid":36,
  "orientation":"orthogonal",
  "properties":[
         {
@@ -640,7 +708,7 @@
          "value":"src\/main.ts"
         }],
  "renderorder":"right-down",
- "tiledversion":"1.10.2",
+ "tiledversion":"git",
  "tileheight":32,
  "tilesets":[
         {
