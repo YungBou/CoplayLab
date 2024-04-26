@@ -2,23 +2,9 @@
 
 let currentPopup: any = undefined;
 let config = WA.state.loadVariable("config");
-function startVideoLoop() {
-  const videoElement = document.getElementById('myLiveStreamScreen') as HTMLVideoElement;
-  
-  // Événement de fin de lecture de la vidéo
-  videoElement.addEventListener('ended', () => {
-      // Rejouer la vidéo depuis le début
-      videoElement.currentTime = 0;
-      videoElement.play();
-  });
-
-  // Lancer la vidéo
-  videoElement.play();
-}
 
 // Waiting for the API to be ready
 WA.onInit().then(() => {
-  startVideoLoop();
   WA.room.area.onEnter("clock").subscribe(() => {
     const today = new Date();
     const time = today.getHours() + ":" + today.getMinutes();
@@ -29,8 +15,9 @@ WA.onInit().then(() => {
 
   let searchWebsite: any;
 
-  WA.room.area.onEnter("cinema").subscribe(async () => {
-    searchWebsite = await WA.room.website.create({
+  WA.room.area.onEnter("cinema").subscribe(() => {
+    console.log("enter area");
+    searchWebsite = WA.room.website.create({
       name: "player",
       url: "./search.html",
       position: {

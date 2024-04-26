@@ -340,7 +340,7 @@
                         {
                          "name":"exitUrl",
                          "type":"string",
-                         "value":"https:\/\/play.workadventu.re\/_\/r0jcyf5jhmq\/localhost:5174\/cinema.tmj"
+                         "value":"cinema.tmj"
                         }],
                  "rotation":0,
                  "type":"area",
@@ -357,7 +357,7 @@
                         {
                          "name":"exitUrl",
                          "type":"string",
-                         "value":"https:\/\/play.workadventu.re\/_\/r0jcyf5jhmq\/localhost:5174\/home.tmj"
+                         "value":"home.tmj"
                         }],
                  "rotation":0,
                  "type":"area",

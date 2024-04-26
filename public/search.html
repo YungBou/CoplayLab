@@ -68,7 +68,7 @@
 
         function initClient() {
             return gapi.client.init({
-                apiKey: '',
+                apiKey: 'AIzaSyBbzOMs1balcnczYjjOPYpOcJ2qmIX5K9A',
                 discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
             });
         }
@@ -143,7 +143,7 @@
 
         gapi.load('client', function () {
             gapi.client.init({
-                apiKey: '',
+                apiKey: 'AIzaSyBbzOMs1balcnczYjjOPYpOcJ2qmIX5K9A',
                 discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
             }).then(function () {
                 console.log("GAPI client loaded for API");
@@ -224,13 +224,14 @@
                     resultsHtml += `${option}: ${votes[option]} votes `;
                 });
                 console.log('open popup 2');
-                WA.ui.openPopup("resultsPopup", resultsHtml, [{
+                const resultsPopup = WA.ui.openPopup("resultsPopup", resultsHtml, [{
                     label: "Close",
                     className: "primary",
                     callback: (popup) => {
                         popup.close();
                     }
                 }]);
+                setInterval(() => { resultsPopup.close(); }, 5000)
             }
         }
 

@@ -448,7 +448,7 @@
                         {
                          "name":"exitUrl",
                          "type":"string",
-                         "value":"https:\/\/play.workadventu.re\/_\/r0jcyf5jhmq\/localhost:5174\/map-cinema.tmj"
+                         "value":"map-cinema.tmj"
                         }],
                  "rotation":0,
                  "type":"area",
