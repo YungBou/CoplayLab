@@ -157,6 +157,7 @@
 
         function openPollForm() {
             document.getElementById('pollForm').classList.remove('hidden');
+            resetVotes();
         }
 
         function submitPoll() {
@@ -215,6 +216,13 @@
                     popup.close();
                 }
             }]);
+        }
+
+        function resetVotes() {
+            let votes = {};
+            WA.state.saveVariable('votes', JSON.stringify(votes))
+                .then(() => console.log('Votes reset successfully'))
+                .catch(e => console.error('Error resetting votes', e));
         }
 
     </script>
