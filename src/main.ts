@@ -42,13 +42,13 @@ WA.onInit().then(() => {
 
   WA.event.on("teleport-event").subscribe((event) => {
     console.log("Event received", event.data);
-    WA.nav.goToRoom("map.tmj");
+    WA.nav.goToRoom("home.tmj");
   });
   
     WA.ui.onRemotePlayerClicked.subscribe((remotePlayer) => {
       console.log("Le joueur distant a été cliqué:", remotePlayer)
   
-      remotePlayer.addAction('Téléportation', () => {
+      remotePlayer.addAction('Renvoyer le joueur au spawn', () => {
         remotePlayer.sendEvent("teleport-event", "my payload");
     }); 
   });
