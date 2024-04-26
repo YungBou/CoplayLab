@@ -30,6 +30,7 @@
         <input type="text" id="option4" placeholder="Option 4" />
         <button class="btn-submit" onclick="submitPoll()">Submit Poll</button>
     </div>
+    <p id="countdown"></p>
 
 
 
@@ -181,7 +182,7 @@
                 openPollForAll(options);
             });
         });
-
+        var pollPopup;
         function openPollForAll(pollOptions) {
             let buttons = Object.keys(pollOptions).map(key => ({
                 label: pollOptions[key],
@@ -191,25 +192,29 @@
                     popup.close();
                 }
             }));
-            WA.ui.openPopup("pollPopup", "What video should we watch?", buttons);
+            pollPopup = WA.ui.openPopup("pollPopup", "What video should we watch?", buttons);
+            displayVotes();
         }
 
         function vote(option) {
             let votes = JSON.parse(WA.state.loadVariable('votes') || '{}');
             votes[option] = (votes[option] || 0) + 1;
             WA.state.saveVariable('votes', JSON.stringify(votes))
-                .then(() => displayVotes())
+                // .then(() => displayVotes())
                 .catch(e => console.error('Error saving votes', e));
         }
 
 
         function displayVotes() {
-            let countdown = 10; // Set the countdown timer to 10 seconds
+            let countdown = 15; // Set the countdown timer to 10 seconds
             const countdownInterval = setInterval(() => {
                 countdown--; // Decrement countdown every second
-                countdownHtml = `Countdown: ${countdown} seconds remaining`;
+                countdownHtml = `Collecting votes: ${countdown} seconds remaining`;
+                document.getElementById('countdown').innerHTML = countdownHtml;
                 if (countdown <= 0) {
+                    document.getElementById('countdown').innerHTML = '';
                     clearInterval(countdownInterval); // Stop the countdown
+                    pollPopup.close();
                     showResults(); // Call the function to display the results
                 }
             }, 1000); // Update the countdown every second
@@ -225,10 +230,12 @@
                     label: "Close",
                     className: "primary",
                     callback: (popup) => {
+                        console.log('click');
                         popup.close();
                     }
                 }]);
-                setInterval(() => { resultsPopup.close(); }, 5000)
+                setTimeout(() => { resultsPopup.close(); }, 5000);
+                console.log('close results popup');
             }
         }
 

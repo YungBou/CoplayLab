@@ -182,3 +182,10 @@ a {
   font-style: italic;
   font-weight: 400;
 }
+
+#countdown {
+  text-align: center;
+  font-size: xx-large;
+  font-weight: 500;
+  color: #351110;
+}
