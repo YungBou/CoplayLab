@@ -580,6 +580,24 @@
                  "width":94.885100074129,
                  "x":608.213491475167,
                  "y":715.971778048532
+                }, 
+                {
+                 "height":0,
+                 "id":38,
+                 "name":"reactions",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"persist",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"variable",
+                 "visible":true,
+                 "width":0,
+                 "x":14.2327650111193,
+                 "y":166.048925129726
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -685,7 +703,7 @@
          "y":0
         }],
  "nextlayerid":63,
- "nextobjectid":38,
+ "nextobjectid":39,
  "orientation":"orthogonal",
  "properties":[
         {

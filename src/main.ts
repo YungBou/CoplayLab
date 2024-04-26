@@ -2,6 +2,7 @@
 
 let currentPopup: any = undefined;
 let config = WA.state.loadVariable("config");
+import { reactions } from "./constants";
 
 // Waiting for the API to be ready
 WA.onInit().then(() => {
@@ -14,6 +15,8 @@ WA.onInit().then(() => {
   WA.room.area.onLeave("clock").subscribe(closePopup);
 
   let searchWebsite: any;
+  let drawbar: any;
+  WA.state.saveVariable('reactions', reactions).catch((e: any) => console.error('Something went wrong while saving variable', e));
 
   WA.room.area.onEnter("cinema").subscribe(() => {
     console.log("enter area");
@@ -29,6 +32,7 @@ WA.onInit().then(() => {
       allowApi: true,
       scale: 0.5,
     });
+
   });
 
   WA.room.area.onLeave("cinema").subscribe(async () => {
